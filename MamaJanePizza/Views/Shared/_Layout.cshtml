@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MamaJanePizza</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -35,6 +34,11 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
                     <li><a asp-area="" asp-controller="Login" asp-action="Register">Register</a></li>
+<!--                @if (GlobalCustomerListModel.CurrentUser != null)
+{
+                    <li><p style="color:white;font-size:15px;"><b> Welcome @GlobalCustomerListModel.CurrentUser.FirstName </b></p></li>
+                    }
+-->
                 </ul>
             </div>
         </div>
@@ -48,7 +52,7 @@
         <!--            <footer>
                 <p>&copy; 2018 - MamaJanePizza</p>
             </footer>
-        -->
+            -->
 
     </div>
 
