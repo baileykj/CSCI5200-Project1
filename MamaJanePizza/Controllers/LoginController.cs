@@ -16,6 +16,32 @@ namespace MamaJanePizza.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public ActionResult Index(CustomerModel customer)
+        {
+            if (String.IsNullOrEmpty(customer.Email) || String.IsNullOrEmpty(customer.Password))
+            {
+                ViewBag.Message = "Error! Please Enter Both Email and Password";
+                return Redirect("/Login");
+            }
+            else
+            {
+                CustomerModel user = GlobalCustomerListModel.SearchByEmail(customer.Email);
+                if (user != null)
+                {
+                    GlobalCustomerListModel.CurrentUser = user;//This should be the only time we set a new current user
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Message = "Error! Email or Password invalid";
+                    return View();
+                }
+            }
+
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -37,29 +63,17 @@ namespace MamaJanePizza.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult Index(CustomerModel customer)
+        public ActionResult Manage()
         {
-            if (String.IsNullOrEmpty(customer.Email) || String.IsNullOrEmpty(customer.Password))
-            {
-                ViewBag.Message = "Error! Please Enter Both Email and Password";
-                return Redirect("/Login");
-            }
-            else
-            {
-                CustomerModel user = GlobalCustomerListModel.SearchByEmail(customer.Email);
-                if (user != null)
-                {
-                    GlobalCustomerListModel.CurrentUser = user;
-                    return View();
-                }
-                else
-                {
-                    ViewBag.Message = "Error! Email or Password invalid";
-                    return View();
-                }
-            }
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult Manage(CustomerModel customer)
+        {
+            GlobalCustomerListModel.RemoveCustomer();
+
+            return Redirect("/");
         }
     }
 }

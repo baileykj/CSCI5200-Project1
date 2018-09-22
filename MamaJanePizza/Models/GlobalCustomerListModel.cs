@@ -44,5 +44,16 @@ namespace MamaJanePizza.Models
             return found;
         }
 
+        /// <summary>
+        /// Removes the current user from the gloabl list then set current user to null
+        /// </summary>
+        /// <returns></returns>
+        public static bool RemoveCustomer()
+        {
+            _CustomerList.Remove(CurrentUser);
+            CurrentUser = null;
+            return true;
+        }
+
     }
 }
