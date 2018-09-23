@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MamaJanePizza.Models;
-
+using System.Net.Http;
+using System.Net.Mail;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace MamaJanePizza.Controllers
 {
@@ -30,7 +33,7 @@ namespace MamaJanePizza.Controllers
                 CustomerModel user = GlobalCustomerListModel.SearchByEmail(customer.Email);
                 if (user != null)
                 {
-                    GlobalCustomerListModel.CurrentUser = user;//This should be the only time we set a new current user
+                    GlobalCustomerListModel.CurrentUser = user;
                     return View();
                 }
                 else
@@ -75,5 +78,54 @@ namespace MamaJanePizza.Controllers
 
             return Redirect("/");
         }
+
+        public ActionResult Recover()
+        {
+            return View(); 
+        }
+
+        [HttpPost]
+        public ActionResult Recover(CustomerModel customer)
+        {
+            var client = new SendGridClient("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");
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("MamaJane@pizza.com", "Mama Jane's Pizza"),
+                Subject = "Account Password Reset",
+                HtmlContent = "Reset your password by <a href='https://localhost:44302/Login/Reset'>clicking here</a>"
+            };
+            msg.AddTo(new EmailAddress(customer.Email));
+
+            client.SendEmailAsync(msg);
+
+            ViewBag.Message = "Email Sent!";
+            
+            GlobalCustomerListModel.CurrentUser = GlobalCustomerListModel.SearchByEmail(customer.Email);
+
+            return View();
+        }
+
+        public ActionResult Reset()
+        {
+            return View();
+        }
+
+        public ActionResult PasswordReset(CustomerModel customer)
+        {
+
+            if(customer.Password.ToLower().Equals(customer.ComfirmPassword.ToLower()))
+            {
+                GlobalCustomerListModel.CurrentUser.Password = customer.Password;//Updating with the new password
+                GlobalCustomerListModel.CurrentUser.ComfirmPassword = customer.ComfirmPassword;//Updating with the new password
+                return Redirect("/");
+            }
+            else
+            {
+                ViewBag.Message = "Error, Passwords Did Not Match!";
+                return Redirect("/Login/Reset");            
+            }
+
+        }
+
     }
 }
