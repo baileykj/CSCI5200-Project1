@@ -1,0 +1,55 @@
+﻿@model MamaJanePizza.Models.PizzaModel
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div>
+    <h4>Confirm your order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Crust)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Crust)
+        </dd>
+        <dt>
+            Sauce:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfSauce)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Size)
+        </dd>
+        <dt>
+            Cheese:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfCheese)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Toppings)
+        </dt>
+        @foreach (var top in Model.Toppings)
+        {
+            <dd>
+                @Html.DisplayFor(model => top)
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

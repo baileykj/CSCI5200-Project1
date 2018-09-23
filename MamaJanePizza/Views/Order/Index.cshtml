@@ -1,0 +1,246 @@
+﻿@{
+    ViewData["Title"] = "CreateOrder";
+}
+@model MamaJanePizza.Controllers.OrderController
+<h2>Create Your Own Pizza</h2>
+
+<hr />
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateOrder">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Size" class="form-check-input">Small </label>
+                    <input class="form-check-input" type="radio" name="sizeRadios" id="sizeRadios0" value="small" checked>
+                    <label asp-for="Size" class="form-check-label">Large </label>
+                    <input class="form-check-input" type="radio" name="sizeRadios" id="sizeRadios1" value="large">
+                    <!--<input asp-for="Size" class="form-control" />-->
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Crust" class="form-check-input">Hand tossed </label>
+                    <input class="form-check-input" type="radio" name="crustRadios" id="crustRadios0" value="handTossed" checked>
+                    <label asp-for="Crust" class="form-check-label">Thin Crust </label>
+                    <input class="form-check-input" type="radio" name="crustRadios" id="crustRadios1" value="thinCrust">
+                    <!--<label asp-for="Crust" class="control-label"></label>
+                    <input asp-for="Crust" class="form-control" />-->
+                    <span asp-validation-for="Crust" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeOfCheese" class="form-check-input">Light cheese </label>
+                    <input class="form-check-input" type="radio" name="cheeseRadios" id="cheeseRadios0" value="light" checked>
+                    <label asp-for="TypeOfCheese" class="form-check-label">Regular cheese </label>
+                    <input class="form-check-input" type="radio" name="cheeseRadios" id="cheeseRadios1" value="regular">
+                    <label asp-for="TypeOfCheese" class="form-check-label">Extra cheese </label>
+                    <input class="form-check-input" type="radio" name="cheeseRadios" id="cheeseRadios1" value="extra">
+                    <!--<label asp-for="TypeOfCheese" class="control-label"></label>
+                    <input asp-for="TypeOfCheese" class="form-control" />-->
+                    <span asp-validation-for="TypeOfCheese" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="toppingsChecks0">Pepperoni </label>
+                    <input class="form-check-input" type="checkbox" name="toppingsChecks" id="toppingsChecks0" value="pepperoni">
+                    <label class="form-check-label" for="toppingsChecks1">Meatball </label>
+                    <input class="form-check-input" type="checkbox" name="toppingsChecks" id="toppingsChecks1" value="meatball">
+                    <label class="form-check-label" for="toppingsChecks2">Sausage </label>
+                    <input class="form-check-input" type="checkbox" name="toppingsChecks" id="toppingsChecks2" value="sausage">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add to order" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+<!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>
+    .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
+        font-family: Arial, Helvetica, sans-serif;
+        color: black
+    }
+
+        .bootstrap-iso form button, .bootstrap-iso form button:hover {
+            color: white !important;
+        }
+
+    .asteriskField {
+        color: red;
+    }
+</style>
+
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <form action='@Url.Action("AddToOrder","Order")' method="post">
+                    <div class="form-group" id="div_radio">
+                        <label class="control-label requiredField" for="size">
+                            Pizza size:
+                            <span class="asteriskField">
+                                *
+                            </span>
+                        </label>
+                        <div class="">
+                            <label class="radio-inline">
+                                <input name="sizeRadio" type="radio" value="Small" />
+                                Small
+                            </label>
+                            <label class="radio-inline">
+                                <input name="sizeRadio" type="radio" value="Medium" />
+                                Medium
+                            </label>
+                            <label class="radio-inline">
+                                <input name="sizeRadio" type="radio" value="Large" />
+                                Large
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="div_crustRadio">
+                        <label class="control-label requiredField" for="crustRadio">
+                            Crust:
+                            <span class="asteriskField">
+                                *
+                            </span>
+                        </label>
+                        <div class="">
+                            <label class="radio-inline">
+                                <input name="crustRadio" type="radio" value="Thin and Crispy" />
+                                Thin and Crispy
+                            </label>
+                            <label class="radio-inline">
+                                <input name="crustRadio" type="radio" value="Hand Tossed" />
+                                Hand Tossed
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="div_sauceRadio">
+                        <label class="control-label requiredField" for="sauceRadio">
+                            Sauce:
+                            <span class="asteriskField">
+                                *
+                            </span>
+                        </label>
+                        <div class="">
+                            <label class="radio-inline">
+                                <input name="sauceRadio" type="radio" value="Marinara" />
+                                Marinara
+                            </label>
+                            <label class="radio-inline">
+                                <input name="sauceRadio" type="radio" value="Barbeque Sauce" />
+                                Barbeque Sauce
+                            </label>
+                            <label class="radio-inline">
+                                <input name="sauceRadio" type="radio" value="NoSauce" />
+                                No Sauce
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="div_cheeseRadio">
+                        <label class="control-label requiredField" for="cheeseRadio">
+                            Cheese:
+                            <span class="asteriskField">
+                                *
+                            </span>
+                        </label>
+                        <div class="">
+                            <label class="radio-inline">
+                                <input name="cheeseRadio" type="radio" value="Light cheese" />
+                                Light cheese
+                            </label>
+                            <label class="radio-inline">
+                                <input name="cheeseRadio" type="radio" value="Regular cheese" />
+                                Regular cheese
+                            </label>
+                            <label class="radio-inline">
+                                <input name="cheeseRadio" type="radio" value="Extra cheese" />
+                                Extra cheese
+                            </label>
+                            <label class="radio-inline">
+                                <input name="cheeseRadio" type="radio" value="No cheese" />
+                                No cheese
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label ">
+                            Toppings:
+                        </label>
+                        <div class=" ">
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Pepperoni" />
+                                    Pepperoni
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Meatball" />
+                                    Meatball
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Sausage" />
+                                    Sausage
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Ham" />
+                                    Ham
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Chicken" />
+                                    Chicken
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Pork" />
+                                    Pork
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Onions" />
+                                    Onions
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Green pepper" />
+                                    Green pepper
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox">
+                                    <input name="toppingsCheck" type="checkbox" value="Olives" />
+                                    Olives
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button class="btn btn-primary " name="submit" type="submit">
+                                Add to Order
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to Home</a>
+</div>
+

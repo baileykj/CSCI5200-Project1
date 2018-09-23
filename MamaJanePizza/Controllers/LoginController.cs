@@ -3,22 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
+using MamaJanePizza.Models;
+using System.Net.Http;
+using System.Net.Mail;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace MamaJanePizza.Controllers
 {
     public class LoginController : Controller
     {
 
-        private string userEmail = "";
-        private string password = "";
-        private string firstname = "";
-        private string lastname = "";
-        private string confirmpassword = "";
-
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult Index(CustomerModel customer)
+        {
+            if (String.IsNullOrEmpty(customer.Email) || String.IsNullOrEmpty(customer.Password))
+            {
+                ViewBag.Message = "Error! Please Enter Both Email and Password";
+                return Redirect("/Login");
+            }
+            else
+            {
+                CustomerModel user = GlobalCustomerListModel.SearchByEmail(customer.Email);
+                if (user != null)
+                {
+                    GlobalCustomerListModel.CurrentUser = user;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Message = "Error! Email or Password invalid";
+                    return View();
+                }
+            }
+
         }
 
         public ActionResult Register()
@@ -26,34 +50,82 @@ namespace MamaJanePizza.Controllers
             return View();
         }
 
-        public ActionResult UserReg()
+        [HttpPost]
+        public ActionResult Register(CustomerModel customer)
         {
-            userEmail = Convert.ToString(Request.Form["user"]);
-            password = Convert.ToString(Request.Form["password"]);
-            firstname = Convert.ToString(Request.Form["firstname"]);
-            lastname = Convert.ToString(Request.Form["lastname"]);
-            confirmpassword = Convert.ToString(Request.Form["confirmpassword"]);
-
-            if (String.IsNullOrEmpty(userEmail) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(firstname) || String.IsNullOrEmpty(lastname) || String.IsNullOrEmpty(confirmpassword))
+            if(customer.IsValid(customer))
             {
-                return Redirect("/Login/Register");
+                GlobalCustomerListModel.Add(customer);
+
+                return Redirect("/");
             }
             else
-                return Redirect("/");
+            {
+                ViewBag.Message = "Error! Please Enter Valid Information";
+                return View();
+            }
         }
 
-        public ActionResult AuthUser()
+        public ActionResult Manage()
         {
-            userEmail = Convert.ToString(Request.Form["user"]);
-            password = Convert.ToString(Request.Form["password"]);
+            return View();
+        }
 
-            if (String.IsNullOrEmpty(userEmail) || String.IsNullOrEmpty(password))
+        [HttpPost]
+        public ActionResult Manage(CustomerModel customer)
+        {
+            GlobalCustomerListModel.RemoveCustomer();
+
+            return Redirect("/");
+        }
+
+        public ActionResult Recover()
+        {
+            return View(); 
+        }
+
+        [HttpPost]
+        public ActionResult Recover(CustomerModel customer)
+        {
+            var client = new SendGridClient("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");
+            var msg = new SendGridMessage()
             {
-                return Redirect("/Login");
+                From = new EmailAddress("MamaJane@pizza.com", "Mama Jane's Pizza"),
+                Subject = "Account Password Reset",
+                HtmlContent = "Reset your password by <a href='https://localhost:44302/Login/Reset'>clicking here</a>"
+            };
+            msg.AddTo(new EmailAddress(customer.Email));
+
+            client.SendEmailAsync(msg);
+
+            ViewBag.Message = "Email Sent!";
+            
+            GlobalCustomerListModel.CurrentUser = GlobalCustomerListModel.SearchByEmail(customer.Email);
+
+            return View();
+        }
+
+        public ActionResult Reset()
+        {
+            return View();
+        }
+
+        public ActionResult PasswordReset(CustomerModel customer)
+        {
+
+            if(customer.Password.ToLower().Equals(customer.ComfirmPassword.ToLower()))
+            {
+                GlobalCustomerListModel.CurrentUser.Password = customer.Password;//Updating with the new password
+                GlobalCustomerListModel.CurrentUser.ComfirmPassword = customer.ComfirmPassword;//Updating with the new password
+                return Redirect("/");
             }
             else
-                return Redirect("/");
+            {
+                ViewBag.Message = "Error, Passwords Did Not Match!";
+                return Redirect("/Login/Reset");            
+            }
 
         }
+
     }
 }

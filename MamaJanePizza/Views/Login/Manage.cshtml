@@ -1,58 +1,53 @@
-﻿
+﻿@model MamaJanePizza.Models.CustomerModel
+
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Manage Account";
 }
-@model MamaJanePizza.Controllers.LoginController
-<h2>Register</h2>
+
+<h2>Manage Account</h2>
 <style>
 
-    h2{
+    h2 {
         color: black;
         text-align: center;
     }
 </style>
+
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
             <div class="col-sm-offset-2 col-sm-8 col-sm-offset-2 col-md-offset-3 col-md-6 col-md-offset-3 panel panel-primary">
                 <div class="panel-body">
-                    <form action='@Url.Action("Register","Login")' method="post">
+                    <form action='@Url.Action("Manage","Login")' method="post">
                         <div class="form-group">
-                            <label class="sr-only" for="firstname">First Name</label>
+                            <label class="sr-only" for="firstname">@GlobalCustomerListModel.CurrentUser.FirstName</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                <input type="text" class="form-control input-lg" id="firstname" name="firstname" placeholder="First Name" autofocus="autofocus">
+                                <input type="text" class="form-control input-lg" id="firstname" name="firstname" placeholder=@GlobalCustomerListModel.CurrentUser.FirstName readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="sr-only" for="lastname">Last Name</label>
+                            <label class="sr-only" for="lastname">@GlobalCustomerListModel.CurrentUser.LastName</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                <input type="text" class="form-control input-lg" id="lastname" user" name="lastname" placeholder="Last Name">
+                                <input type="text" class="form-control input-lg" id="lastname" user" name="lastname" placeholder=@GlobalCustomerListModel.CurrentUser.LastName readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="sr-only" for="email">Email address</label>
+                            <label class="sr-only" for="email">@GlobalCustomerListModel.CurrentUser.Email</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                <input type="text" class="form-control input-lg" id="email" name="email" placeholder="Email">
+                                <input type="text" class="form-control input-lg" id="email" name="email" placeholder=@GlobalCustomerListModel.CurrentUser.Email readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="password">Password</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                                <input type="password" class="form-control input-lg" id="password" name="Password" placeholder="Password">
+                                <input type="password" class="form-control input-lg" id="password" name="Password" placeholder="********" readonly  TextMode="Password" >
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="confirmpassword">Confirm Password</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                                <input type="password" class="form-control input-lg" id="confirmpassword" name="confirmpassword" placeholder="Comfirm Password">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-login btn-lg btn-block">Create<i class="fa fa-sign-in"></i></button>
+                        <button type="submit" class="btn btn-login btn-lg btn-block">Cancel Account<i class="fa fa-sign-in"></i></button>
                         @if (ViewBag.Message != null)
                         {
                             <p style="color:red;font-size:20px;align-content:center;text-align:center;"><b> @ViewBag.Message </b></p>

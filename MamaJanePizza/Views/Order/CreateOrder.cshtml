@@ -1,0 +1,48 @@
+﻿@model MamaJanePizza.Models.PizzaModel
+
+@{
+    ViewData["Title"] = "CreateOrder";
+}
+
+<h2>CreateOrder</h2>
+
+<h4>PizzaModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Size" class="form-check-label">Small</label>
+                <input class="form-check-input" type="radio" name="sizeRadios" id="sizeRadios0" value="small" checked>
+                <label asp-for="Size" class="form-check-label">Large</label>
+                <input class="form-check-input" type="radio" name="sizeRadios" id="sizeRadios1" value="large">
+                <!--<input asp-for="Size" class="form-control" />-->
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Crust" class="control-label"></label>
+                <input asp-for="Crust" class="form-control" />
+                <span asp-validation-for="Crust" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeOfCheese" class="control-label"></label>
+                <input asp-for="TypeOfCheese" class="form-control" />
+                <span asp-validation-for="TypeOfCheese" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeOfSauce" class="control-label"></label>
+                <input asp-for="TypeOfSauce" class="form-control" />
+                <span asp-validation-for="TypeOfSauce" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
