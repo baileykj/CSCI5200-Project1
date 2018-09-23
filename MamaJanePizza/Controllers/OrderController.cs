@@ -35,13 +35,39 @@ namespace MamaJanePizza.Controllers
         public ActionResult AddToOrder()
         {
             double price = 0;
+
             pizza.Size = Convert.ToString(Request.Form["sizeRadio"]);
             pizza.Crust = Convert.ToString(Request.Form["crustRadio"]);
-            pizza.TypeOfCheese = Convert.ToString(Request.Form["cheeseRadio"]);
-            pizza.TypeOfSauce = Convert.ToString(Request.Form["sauceRadio"]);
-
             List<String> toppings = new List<String>(Request.Form["toppingsCheck"]);
+            
+
+            if (Convert.ToString(Request.Form["specialty"]) != "Select")
+            {
+                switch(Convert.ToString(Request.Form["specialty"]))
+                {
+                    case "BarbecueChicken": toppings.Add("Chicken");
+                        toppings.Add("Onions");
+                        pizza.TypeOfSauce = "Barbecue";
+                        break;
+                    case "MeatLovers": toppings.Add("Pepperoni");
+                        toppings.Add("Meatball");
+                        toppings.Add("Sausage");
+                        toppings.Add("Ham");
+                        pizza.TypeOfSauce = "Marinara";
+                        break;
+                    case "VeggieLovers": toppings.Add("Onions");
+                        toppings.Add("Green pepper");
+                        toppings.Add("Olives");
+                        break;
+                }
+            }
             pizza.Toppings = toppings;
+            if (pizza.TypeOfSauce == "")
+            {
+                pizza.TypeOfSauce = Convert.ToString(Request.Form["sauceRadio"]);
+            }
+            pizza.TypeOfCheese = Convert.ToString(Request.Form["cheeseRadio"]);
+            
             
             switch (pizza.Size)
             {
