@@ -34,7 +34,8 @@ namespace MamaJanePizza.Controllers
                 if (user != null)
                 {
                     GlobalCustomerListModel.CurrentUser = user;
-                    return View();
+                    ViewBag.Message = "Successfully logged in!";
+                    return Redirect("/");
                 }
                 else
                 {
@@ -56,6 +57,8 @@ namespace MamaJanePizza.Controllers
             if(customer.IsValid(customer))
             {
                 GlobalCustomerListModel.Add(customer);
+                GlobalCustomerListModel.CurrentUser = customer;
+                ViewBag.Message = "Successfully registered and logged in!";
 
                 return Redirect("/");
             }
