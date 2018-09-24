@@ -25,12 +25,31 @@ namespace MamaJanePizza.Controllers
             return View(pizza);
         }
 
+        public ActionResult Confirm()
+        {
+            return View();
+        }
+
         // GET: Order/Create
         public ActionResult Create()
         {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Checkout()
+        {
+            var firstName = Convert.ToString(Request.Form["firstName"]);
+            var middleName = Convert.ToString(Request.Form["middleName"]);
+            var lastName = Convert.ToString(Request.Form["lastName"]);
+            var tel = Convert.ToString(Request.Form["tel"]);
+            var email = Convert.ToString(Request.Form["email"]);
+            var ccNum = Convert.ToString(Request.Form["ccNum"]);
+            var date = Convert.ToString(Request.Form["date"]);
+            var cvv = Convert.ToString(Request.Form["cvv"]);
+
+            return RedirectToAction("Confirm");
+        }
         [HttpPost]
         public ActionResult AddToOrder()
         {
