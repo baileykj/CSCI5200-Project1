@@ -38,17 +38,17 @@
                     {
                         <li><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
                     }
-                    }
                     @if (GlobalCustomerListModel.CurrentUser != null)
                     {
-                        <!--                        <li>Welcome @GlobalCustomerListModel.CurrentUser.FirstName</li>-->
                         <li><a asp-area="" asp-controller="Login" asp-action="Manage">Account</a></li>
-
+                        <li>
+                            <a style="color:white; font-size:18px;"> Welcome @GlobalCustomerListModel.CurrentUser.FirstName</a>
+                        </li>
                     }
                 </ul>
             </div>
         </div>
-    </nav>
+        </nav>
 
     <partial name="_CookieConsentPartial" />
 
