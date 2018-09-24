@@ -33,15 +33,15 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Order" asp-action="Index">Order Online</a></li>
                     @if (GlobalCustomerListModel.CurrentUser == null)
                     {
                         <li><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
-                        <li><a asp-area="" asp-controller="Login" asp-action="Register">Register</a></li>
                     }
                     }
                     @if (GlobalCustomerListModel.CurrentUser != null)
                     {
-<!--                        <li>Welcome @GlobalCustomerListModel.CurrentUser.FirstName</li>-->
+                        <!--                        <li>Welcome @GlobalCustomerListModel.CurrentUser.FirstName</li>-->
                         <li><a asp-area="" asp-controller="Login" asp-action="Manage">Account</a></li>
 
                     }

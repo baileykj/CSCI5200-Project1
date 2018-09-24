@@ -62,11 +62,17 @@ namespace MamaJanePizza.Controllers
                 }
             }
             pizza.Toppings = toppings;
-            if (pizza.TypeOfSauce == "")
+            if (String.IsNullOrEmpty(pizza.TypeOfSauce))
             {
                 pizza.TypeOfSauce = Convert.ToString(Request.Form["sauceRadio"]);
             }
-            pizza.TypeOfCheese = Convert.ToString(Request.Form["cheeseRadio"]);
+            if (String.IsNullOrEmpty(pizza.TypeOfCheese))
+            {
+                pizza.TypeOfCheese = Convert.ToString(Request.Form["cheeseRadio"]);
+            }
+            else {
+                pizza.TypeOfCheese = Convert.ToString(Request.Form["sauceRadio"]);
+            }
             
             
             switch (pizza.Size)
